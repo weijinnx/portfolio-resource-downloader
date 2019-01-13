@@ -13,13 +13,9 @@ First of all you need to install project:
 
 After that let's copy ``.env.example`` as ``.env`` and run ``php artisan key:generate``
 
-Then you need go to the project directory and run init command:
+Then you need to run init command:
 
-``make init_dev``
-
-Then
-
-``make run``
+``make init_dev`` then ``make run``
 
 This command will create docker containers and starts project on localhost on 2000 port.
 
