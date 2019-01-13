@@ -1,0 +1,38 @@
+version: "3"
+services:
+    downloader:
+        build:
+            context: .
+        expose:
+            - "9000"
+        env_file: .env
+        depends_on:
+            - mysql
+        volumes:
+            - ./:/var/www/
+        networks:
+            - downloader
+    nginx:
+        depends_on:
+            - downloader
+        build:
+            context: ./docker/nginx
+        ports:
+            - "2000:80"
+        volumes:
+            - ./docker/nginx/sites-available:/etc/nginx/sites-available
+            - ./public:/var/www/public
+        networks:
+            - downloader
+    mysql:
+        image: mysql:latest
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: aurox
+        ports:
+            - "3906:3306"
+        networks:
+            - downloader
+networks:
+    downloader:
